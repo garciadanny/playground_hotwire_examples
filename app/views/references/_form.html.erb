@@ -1,32 +1,16 @@
-<%= form_with(model: reference) do |form| %>
-  <% if reference.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(reference.errors.count, "error") %> prohibited this reference from being saved:</h2>
+<%= tag.li class: "mt-2", hidden: form.object.marked_for_destruction? do %>
+  <div class="grid gap-2">
+    <%= form.hidden_field :id %>
 
-      <ul>
-        <% reference.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div>
-    <%= form.label :name, style: "display: block" %>
+    <%= form.label :name %>
     <%= form.text_field :name %>
-  </div>
 
-  <div>
-    <%= form.label :email_address, style: "display: block" %>
-    <%= form.text_field :email_address %>
-  </div>
+    <%= form.label :email_address %>
+    <%= form.email_field :email_address %>
 
-  <div>
-    <%= form.label :applicant_id, style: "display: block" %>
-    <%= form.text_field :applicant_id %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+    <div>
+      <%= form.checkbox :_destroy %>
+      <%= form.label :_destroy %>
+    </div>
   </div>
 <% end %>
