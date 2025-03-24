@@ -1,22 +1,31 @@
-<%= form_with(model: applicant) do |form| %>
-  <% if applicant.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(applicant.errors.count, "error") %> prohibited this applicant from being saved:</h2>
+<fieldset>
+  <legend>Applicant</legend>
 
-      <ul>
-        <% applicant.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= form.label :name %>
+  <%= form.text_field :name %>
+</fieldset>
 
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
-  </div>
+<fieldset>
+  <legend>Personal references</legend>
 
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+  <ol>
+    <% form.object.references.each_with_index do |reference, index| %>
+      <%= form.fields :references_attributes, model: reference, index: index do |reference_form| %>
+        <li <%= "hidden" if reference_form.object.marked_for_destruction? %> class="mt-2">
+          <div class="grid gap-2">
+            <%= reference_form.hidden_field :id %>
+            <%= reference_form.hidden_field :_destroy %>
+
+            <%= reference_form.label :name %>
+            <%= reference_form.text_field :name %>
+
+            <%= reference_form.label :email_address %>
+            <%= reference_form.email_field :email_address %>
+          </div>
+        </li>
+      <% end %>
+    <% end %>
+  </ol>
+</fieldset>
+
+<%= form.button %>

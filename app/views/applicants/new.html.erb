@@ -1,11 +1,3 @@
-<% content_for :title, "New applicant" %>
-
-<h1>New applicant</h1>
-
-<%= render "form", applicant: @applicant %>
-
-<br>
-
-<div>
-  <%= link_to "Back to applicants", applicants_path %>
-</div>
+<%= form_with model: @applicant, class: "grid gap-2 form" do |form| %>
+  <%= render partial: "form", object: form %>
+<% end %>
