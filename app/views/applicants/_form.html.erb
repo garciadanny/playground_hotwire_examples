@@ -26,6 +26,15 @@
       <% end %>
     <% end %>
   </ol>
+
+  <%= form.fields :references_attributes, index: form.object.references.size do |reference_form| %>
+    <%= reference_form.button :_destroy,
+      value: false, 
+      formaction: form.object.persisted? ? edit_applicant_path(form.object) : new_applicant_path,
+      formmethod: :get  do %>
+      Add Personal Reference
+    <% end %>
+  <% end %>
 </fieldset>
 
 <%= form.button %>

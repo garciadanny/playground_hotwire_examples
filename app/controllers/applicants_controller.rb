@@ -1,7 +1,8 @@
 class ApplicantsController < ApplicationController
   def new
-    @applicant = Applicant.new
-    @applicant.references.new
+    # @applicant = Applicant.new
+    # @applicant.references.new
+    @applicant = Applicant.new(applicant_params)
   end
 
   def create
@@ -20,6 +21,7 @@ class ApplicantsController < ApplicationController
 
   def edit
     @applicant = Applicant.find params[:id]
+    @applicant.assign_attributes(applicant_params)
   end
 
   def update
@@ -35,7 +37,8 @@ class ApplicantsController < ApplicationController
   private
 
   def applicant_params
-    params.require(:applicant).permit(
+    # params.require(:applicant).permit(
+    params.fetch(:applicant, {}).permit(
       :name,
       references_attributes: [ :name, :email_address, :id, :_destroy ],
     )
